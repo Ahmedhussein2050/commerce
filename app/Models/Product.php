@@ -18,9 +18,8 @@ class Product extends Model
         'desc',
         'image'
     ];
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
+    public function category(): BelongsTo    {
+        return $this->belongsTo(Category::class);
     }
     public function user(): BelongsTo
     {

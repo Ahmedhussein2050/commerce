@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,17 +22,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [Controller::class, 'view']);
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
+Route::get('/home', [Controller::class, 'view'])
+    ->name('home');
 require __DIR__.'/auth.php';
 
+Route::get('/notAllowed', function (){
+    return "You Don't Have Permission To Visit This Page!";
+});
 
 
 // Email Verification -------------------------------------------------
@@ -91,8 +91,9 @@ Route::post('product/create', [ProductsController::class, 'store']);
 Route::get('category/create', [CategoryController::class, 'create'])
     ->name('category.create');
 Route::post('category/create', [CategoryController::class, 'store']);
-Route::get('categories/{category}/products', [CategoryController::class, 'view'])
-    ->name('categories.products');
+
+Route::get('categories/{category:name}', [CategoryController::class, 'view'])
+    ->name('category');
 
 
 Route::get('product/{product}/edit', [ProductsController::class, 'edit'])

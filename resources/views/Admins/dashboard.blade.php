@@ -16,15 +16,13 @@
                                 <b>{{ $product->name }}</b>
                             </p>
                             <p class="card-text mb-1">{{ substr($product->desc, 0, 20) }}...</p>
-                            <h5 style="margin-bottom: 2px">Categories:</h5>
-                            @foreach($product->categories as $category)
-                                <a href="{{ route('categories.products', $category) }}" class="text-decoration-none text-warning mb-1"
-                                   style="margin-right: 3px !important; padding: 0 !important; border: none !important; cursor: pointer; background-color: transparent">
-                                    <b>{{ $category->name }}</b>
-                                </a>
-                            @endforeach
-                            <p class="card-text mb-1" style="font-size: 12px">
-                                <b style="width: 30%; font-weight: 900">{{$product->price}} EGP</b>
+                            <span style="margin-bottom: 2px; font-weight: bold ">Category:</span>
+                            <a href="{{ route('category', $product->category->name) }}" class="text-decoration-none text-warning mb-1"
+                                style="margin-right: 3px !important; padding: 0 !important; border: none !important; cursor: pointer; background-color: transparent">
+                                <b>{{ $product->category->name}}</b>
+                            </a>
+                            <p class="card-text my-2" style="font-size: 12px">
+                                Price: <b style="width: 30%; font-weight: 900">{{$product->price}} EGP</b>
                             </p>
 
                             <a href="{{ url('product',$product->id) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-secondary"><b>View</b></a>

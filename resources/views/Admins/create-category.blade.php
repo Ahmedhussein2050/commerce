@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Add New Product
+    Add New Category
 @endsection
 
 @section('content')

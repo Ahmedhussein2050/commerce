@@ -8,14 +8,16 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('dashboard')}}">Home</a>
+                    <a class="nav-link" href="{{url('home')}}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('product/create')}}">Add Product</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('category/create')}}">Add Category</a>
-                </li>
+                @if(isset(auth()->user()->is_admin) && auth()->user()->is_admin == 1)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('product/create')}}">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('category/create')}}">Add Category</a>
+                    </li>
+                @endif
             </ul>
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                 <form class="d-flex m-auto">
@@ -32,13 +34,15 @@
                             {{ auth()->user()->username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('product.dashboard', auth()->user()->username) }}">Dashboard</a>
-                            </li>
+                            @if(isset(auth()->user()->is_admin) && auth()->user()->is_admin == 1)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('product.dashboard', auth()->user()->username) }}">Dashboard</a>
+                                </li>
                             {{--                        <li><a class="dropdown-item" href="#">Another action</a></li>--}}
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
+                            @endif
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

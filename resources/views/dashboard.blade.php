@@ -1,17 +1,56 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
+@section('title')
+    Home
+@endsection
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
+@section('content')
+
+    <div class="row m-auto" style="width: 66%">
+        @if(count($products) > 0)
+            @foreach($products as $product)
+                <div class="col-lg-4 pb-5">
+                    <div class="card">
+                        <img src="{{ asset($product->image)}}" class="card-img-top img-fluid" style="height: 180px" alt="photo">
+                        <div class="card-body">
+                            <p class="card-title mb-0">
+                                <b>{{ $product->name }}</b> by <small><b>{{$product->user->username}}</b></small>
+                            </p>
+                            <p class="card-text mb-1">{{ substr($product->desc, 0, 20) }}...</p>
+                            <span style="margin-bottom: 2px; font-weight: bold ">Category:</span>
+                            <a href="{{ route('category', $product->category->name) }}" class="text-decoration-none text-warning mb-1"
+                               style="margin-right: 3px !important; padding: 0 !important; border: none !important; cursor: pointer; background-color: transparent">
+                                <b>{{ $product->category->name}}</b>
+                            </a>
+                            <p class="card-text my-2" style="font-size: 12px">
+                                Price: <b style="width: 30%; font-weight: 900">{{$product->price}} EGP</b>
+                            </p>
+
+                            <a href="{{ url('product',$product->id) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-secondary"><b>View</b></a>
+                            @if(isset(auth()->user()->id) && auth()->user()->id == $product->user_id)
+                                <a href="{{ route('product.edit',$product) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-primary"><b>Edit</b></a>
+                                <form class="w-25 mx-0" style="display: inline" action="{{ route('product.delete', $product) }}" method="get">
+                                    <button type="submit"
+                                            class="text-danger"
+                                            style="
+                                                    font-size: 12px;
+                                                    border: none;
+                                                    background-color: transparent;
+                                                    display: inline;
+                                                    padding: 0;
+                                            "
+                                    ><b>Delete</b></button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
                 </div>
+            @endforeach
+            <div>
+                {{ $products->links() }}
             </div>
-        </div>
+        @else
+            <p>No products founded</p>
+        @endif
     </div>
-</x-app-layout>
+
+@endsection

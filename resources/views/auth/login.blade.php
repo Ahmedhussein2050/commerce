@@ -1,4 +1,7 @@
 <x-guest-layout>
+    @section('title')
+        Log in
+    @endsection
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

@@ -50,8 +50,8 @@ class ProductsController extends Controller
         $product->user_id = auth()->user()->id;
         $product->category_id = $request->category;
         $product->save();
-        $categories = Category::query()->findOrFail($request->category);
-        $product->categories()->attach($categories);
+        $category = Category::query()->findOrFail($request->category);
+        $product->category()->addBinding($category);
         return redirect()->route('product.dashboard', auth()->user()->username);
     }
 
