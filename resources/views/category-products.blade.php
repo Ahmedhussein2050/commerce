@@ -25,7 +25,7 @@
                             </p>
 
                             <a href="{{ url('product',$product->id) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-secondary"><b>View</b></a>
-                            @if(auth()->user()->id == $product->user_id)
+                            @if(auth()->user() && auth()->user()->id == $product->user_id)
                                 <a href="{{ route('product.edit',$product) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-primary"><b>Edit</b></a>
 
                                 <form class="w-25 mx-0" style="display: inline" action="{{ route('product.delete', $product) }}" method="get">

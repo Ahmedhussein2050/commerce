@@ -76,33 +76,34 @@ Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
 
 
 // Admins -----------------------------------------------------------------------------------
+Route::middleware('admin')->group(function () {
+
+    Route::get('product/{user:username}/dashboard', [DashboardController::class, 'show'])
+        ->name('product.dashboard');
 
 
-Route::get('product/{user:username}/dashboard', [DashboardController::class, 'show'])
-    ->name('product.dashboard');
+    Route::get('product/create', [ProductsController::class, 'create'])
+        ->name('product.create');
+
+    Route::post('product/create', [ProductsController::class, 'store']);
 
 
-Route::get('product/create', [ProductsController::class, 'create'])
-    ->name('product.create');
+    Route::get('category/create', [CategoryController::class, 'create'])
+        ->name('category.create');
+    Route::post('category/create', [CategoryController::class, 'store']);
 
-Route::post('product/create', [ProductsController::class, 'store']);
+
+    Route::get('product/{product}/edit', [ProductsController::class, 'edit'])
+        ->name('product.edit');
+    Route::post('product/{product}/edit', [ProductsController::class, 'update']);
 
 
-Route::get('category/create', [CategoryController::class, 'create'])
-    ->name('category.create');
-Route::post('category/create', [CategoryController::class, 'store']);
+    Route::get('product/{product}/delete', [ProductsController::class, 'delete'])
+        ->name('product.delete');
+
+});
 
 Route::get('categories/{category:name}', [CategoryController::class, 'view'])
     ->name('category');
-
-
-Route::get('product/{product}/edit', [ProductsController::class, 'edit'])
-    ->name('product.edit');
-Route::post('product/{product}/edit', [ProductsController::class, 'update']);
-
-
-Route::get('product/{product}/delete', [ProductsController::class, 'delete'])
-    ->name('product.delete');
-
 
 Route::get('product/{id}', [ProductsController::class, 'view']);

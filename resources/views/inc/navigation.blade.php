@@ -27,6 +27,13 @@
             </ul>
 
             <ul class="navbar-nav mb-2 mb-lg-0 mx-5">
+                <li class="nav-item p-2">
+                    <a class="nav-link" style="padding: 0 !important; cursor: pointer">
+                        <span class="fas fa-shopping-cart">
+                            (<span class="text-danger">0</span>)
+                        </span>
+                    </a>
+                </li>
                 @auth()
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

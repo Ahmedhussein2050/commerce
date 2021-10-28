@@ -43,10 +43,22 @@
                     <p style="line-height: 1.6; margin-top: 16px !important; margin-bottom: 16px !important; ">
                         <b>{{$product->price}} EGP</b>
                     </p>
-                    <a href="{{route('product.dashboard', auth()->user()->username)}}" class="mx-2 text-decoration-none text-secondary"><b>Back</b></a>
-                    <a href="{{ route('product.edit',$product) }}" class="text-decoration-none text-primary mx-2"><b>Edit</b></a>
-                    <a href="#" class="mx-2 text-decoration-none text-danger"><b>Delete</b></a>
-
+                    <a href="{{url('/home')}}" class="mx-2 text-decoration-none text-secondary"><b>Back</b></a>
+                    @if(isset(auth()->user()->id) && auth()->user()->id == $product->user_id)
+                        <a href="{{ route('product.edit',$product) }}" style="font-size: 12px;" class="mr-1 text-decoration-none text-primary"><b>Edit</b></a>
+                        <form class="w-25 mx-0" style="display: inline" action="{{ route('product.delete', $product) }}" method="get">
+                            <button type="submit"
+                                    class="text-danger"
+                                    style="
+                                                    font-size: 12px;
+                                                    border: none;
+                                                    background-color: transparent;
+                                                    display: inline;
+                                                    padding: 0;
+                                            "
+                            ><b>Delete</b></button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
